@@ -50,6 +50,7 @@ fun FavoritesScreen(){
         Text(text = "Избранное")
     }
 }
+val check = true
 
 
 
