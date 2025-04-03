@@ -8,8 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.getphraseapp.FavoritesScreen
-import com.example.getphraseapp.MenuScreen
 import com.example.getphraseapp.Navigation.BottomNavItem
+import com.example.getphraseapp.Navigation.BottomNavigationBar
 import com.example.getphraseapp.SearchScreen
 
 @Composable

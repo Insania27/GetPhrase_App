@@ -8,7 +8,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomNavItem(val route: String, val icon: ImageVector, val title: String) {
-    object Menu: BottomNavItem("home", Icons.Default.Menu, "Меню")
+    object Menu: BottomNavItem("menu", Icons.Default.Menu, "Меню")
     object Search: BottomNavItem("search", Icons.Default.Search, "Поиск")
     object Favorites: BottomNavItem("favorites", Icons.Default.Favorite, "Избранное")
     object Profile: BottomNavItem("profile", Icons.Default.AccountCircle, "Профиль")

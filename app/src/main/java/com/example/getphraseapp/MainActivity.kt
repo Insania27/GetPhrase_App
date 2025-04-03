@@ -30,12 +30,6 @@ class MainActivity : ComponentActivity() {
 
 
 
-@Composable
-fun MenuScreen(){
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Меню")
-    }
-}
 
 @Composable
 fun SearchScreen(){
@@ -50,7 +44,6 @@ fun FavoritesScreen(){
         Text(text = "Избранное")
     }
 }
-val check = true
 
 
 
