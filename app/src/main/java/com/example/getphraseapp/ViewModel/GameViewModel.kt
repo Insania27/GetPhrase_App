@@ -4,32 +4,38 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.getphraseapp.Data.Network.App
 import com.example.getphraseapp.Data.Network.GamesResponse
 import com.example.getphraseapp.Data.Network.RetrofitClient
+import com.example.getphraseapp.Data.Network.SteamApiService
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GameViewModel: ViewModel(){
-    private val _gameList = MutableLiveData<List<App>>()
-    val gameList: LiveData<List<App>> = _gameList
+class GameViewModel(private val steamApiService: SteamApiService) : ViewModel() {
+    private val _games = MutableLiveData<List<App>>(emptyList())
+    val games: LiveData<List<App>> = _games
 
-    fun fetchGames(){
-        RetrofitClient.apiService.getGames().enqueue(object: Callback<GamesResponse> {
-            override fun onResponse(call: Call<GamesResponse>, response: Response<GamesResponse>){
-                if (response.isSuccessful) {
-                    _gameList.postValue(response.body()?.applist?.apps?: emptyList())
-                } else{
-                    Log.e("GameViewModel", "API error: ${response.code()}")
-                    _gameList.postValue(emptyList())
+    fun fetchGames() {
+        viewModelScope.launch {
+            steamApiService.getGames().enqueue(object : Callback<GamesResponse> {
+                override fun onResponse(call: Call<GamesResponse>, response: Response<GamesResponse>) {
+                    if (response.isSuccessful) {
+                        val gameList = response.body()?.applist?.apps ?: emptyList()
+                        _games.value = gameList
+                    } else {
+
+                        _games.value = emptyList()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<GamesResponse>, t: Throwable){
-                Log.e("GameViewModel", "Error fetching games", t)
-                _gameList.postValue(emptyList())
-            }
-        })
+                override fun onFailure(call: Call<GamesResponse>, t: Throwable) {
+
+                    _games.value = emptyList()
+                }
+            })
+        }
     }
 }

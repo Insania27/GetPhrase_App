@@ -10,6 +10,19 @@ object RetrofitClient{
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .build().create(SteamApiService::class.java)
+            .build()
+            .create(SteamApiService::class.java)
+    }
+}
+
+object RetrofitInstance {
+    private const val BASE_URL = "https://api.tvmaze.com/"
+
+    val api: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
     }
 }

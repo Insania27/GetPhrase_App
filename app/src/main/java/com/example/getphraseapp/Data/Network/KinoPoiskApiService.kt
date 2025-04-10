@@ -2,14 +2,27 @@ package com.example.getphraseapp.Data.Network
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface KinoPoiskApiService{
-    @GET("api/v2.2/films")
-    fun getMovies(@Query("page") page: Int,
-                  @Query("type") type: String = "movie"): Call<MovieResponse>
+interface ApiService {
+    @GET("shows/{id}")
+    suspend fun getShowById(@Path("id") id: Int): ShowDetail
 }
 
-data class MovieResponse(val films: List<Movie>)
+data class ShowDetail(
+    val id: Int,
+    val name: String,
+    val image: ImageUrls
+)
 
-data class Movie(val id: Int, val name: String)
+data class ImageUrls(
+    val medium: String,
+    val original: String
+)
+
+data class ShowPreview(
+    val id: Int,
+    var name: String = "",
+    var imageUrl: String = ""
+)
