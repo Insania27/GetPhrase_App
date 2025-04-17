@@ -49,17 +49,17 @@ class AppsViewModel : ViewModel() {
 
     private fun loadAllContent() {
         val games = mySelectedGames.map {
-            App(appid = null, name = it.name, route = "gamesScreen",
+            App(appid = null, name = it.name, route = it.route,
                 isMovie = false, imageUrl = it.image)
         }
 
         val movies = mySelectedMovies.map {
-            App(appid = null, name = it.name, route = "moviesScreen",
+            App(appid = null, name = it.name, route = it.route,
                 isMovie = true, imageUrl = it.image)
         }
 
         val series = mySelectedSeries.map {
-            App(appid = null, name = it.name, route = "seriesScreen",
+            App(appid = null, name = it.name, route = it.route,
                 isMovie = true, imageUrl = it.image)
         }
 

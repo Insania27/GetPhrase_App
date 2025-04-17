@@ -1,6 +1,7 @@
 package com.example.getphraseapp.UI_Objects.Screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +39,8 @@ fun SeriesScreen(navController: NavController) {
             Card(
                 modifier = Modifier.padding(6.dp).fillMaxWidth()
                     .aspectRatio(0.7f)
-                    .clip(RoundedCornerShape(20.dp)),
+                    .clip(RoundedCornerShape(20.dp))
+                    .clickable { navController.navigate(series.route) },
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White,
                     contentColor = Color.Black

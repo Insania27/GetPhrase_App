@@ -17,11 +17,11 @@ val theBoysURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdQknR4U
 
 val mySelectedSeries = listOf(
     ItemsSeries("Во все тяжкие", breakingBadURL, "breakingBadRoute"),
-    ItemsSeries("Сопрано", theSopranosURL, "sopranoRoute"),
+    ItemsSeries("Сопрано", theSopranosURL, "theSopranosRoute"),
     ItemsSeries("Очень странные дела", strangerThingsURL, "strangerThingsRoute"),
     ItemsSeries("Йеллоустоун", yellowstoneURL, "yellowstoneROute"),
     ItemsSeries("Лучше звоните Солу", betterCallSaulURL, "betterCallSaulRoute"),
-    ItemsSeries("Офис", theOfficeURL, "officeRoute"),
+    ItemsSeries("Офис", theOfficeURL, "theOfficeRoute"),
     ItemsSeries("Тед Лассо", tedLassoURL, "tedLassoRoute"),
     ItemsSeries("Пацаны", theBoysURL, "theBoysRoute"),
 )

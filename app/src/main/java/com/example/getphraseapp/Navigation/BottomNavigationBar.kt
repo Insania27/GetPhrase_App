@@ -28,9 +28,9 @@ fun BottomNavigationBar(navController: NavHostController){
                 label = { Text(item.title) },
                 selected = currentDestination == item.route,
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF919191),
+                    selectedIconColor = Color(0xFFCECECE),
                     unselectedIconColor = Color.DarkGray,
-                    selectedTextColor = Color(0xFF919191),
+                    selectedTextColor = Color(0xFFCECECE),
                     unselectedTextColor = Color.DarkGray,
                     indicatorColor = Color.Transparent
                 ),

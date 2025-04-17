@@ -14,7 +14,7 @@ val horizon = "https://preview.redd.it/1k57ixpugdi81.png?width=1024&format=png&a
 val mySelectedGames = listOf(
     GamesItems("God Of War: Ragnarok", godOfWarURL, "godOfWarRoute" ),
     GamesItems("The Last Of Us 2", tlou2URL, "tlou2Route" ),
-    GamesItems("The Witcher 3", theWitcher, "theWitcher3Route" ),
+    GamesItems("The Witcher 3", theWitcher, "theWitcherRoute" ),
     GamesItems("Horizon: Forbidden West", horizon, "horizonRoute" ),
 
 )
