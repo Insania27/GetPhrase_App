@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.getphraseapp.Data.Network.App
+import com.example.getphraseapp.Data.Network.AppDetailsResponse
 import com.example.getphraseapp.Data.Network.GamesResponse
 import com.example.getphraseapp.Data.Network.RetrofitClient
 import com.example.getphraseapp.Data.Network.SteamApiService
@@ -15,27 +16,38 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class GameViewModel(private val steamApiService: SteamApiService) : ViewModel() {
-    private val _games = MutableLiveData<List<App>>(emptyList())
+    private val _games = MutableLiveData<List<App>>()
     val games: LiveData<List<App>> = _games
 
-    fun fetchGames() {
-        viewModelScope.launch {
-            steamApiService.getGames().enqueue(object : Callback<GamesResponse> {
-                override fun onResponse(call: Call<GamesResponse>, response: Response<GamesResponse>) {
-                    if (response.isSuccessful) {
-                        val gameList = response.body()?.applist?.apps ?: emptyList()
-                        _games.value = gameList
-                    } else {
-
-                        _games.value = emptyList()
+    fun fetchAssassinGame() {
+        steamApiService.getAppDetails(2400).enqueue(object : Callback<AppDetailsResponse> {
+            override fun onResponse(
+                call: Call<AppDetailsResponse>,
+                response: Response<AppDetailsResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val appDetailsWrapper = response.body()?.get("2400")
+                    if (appDetailsWrapper != null && appDetailsWrapper.success) {
+                        val appData = appDetailsWrapper.data
+                        val assassinApp = App(
+                            appid = appData.steam_appid,
+                            name = appData.name,
+                            route = "gameDetail/${appData.steam_appid}",
+                            isMovie = false,
+                            imageUrl = appData.header_image
+                        )
+                        _games.value = listOf(assassinApp)
                     }
-                }
-
-                override fun onFailure(call: Call<GamesResponse>, t: Throwable) {
-
+                } else {
                     _games.value = emptyList()
                 }
-            })
-        }
+            }
+
+            override fun onFailure(call: Call<AppDetailsResponse>, t: Throwable) {
+                _games.value = emptyList()
+            }
+        })
     }
+
 }
+

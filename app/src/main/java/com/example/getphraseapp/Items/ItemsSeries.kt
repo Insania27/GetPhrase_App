@@ -2,7 +2,8 @@ package com.example.getphraseapp.Items
 
 data class ItemsSeries(
     val name: String,
-    val image: String
+    val image: String,
+    val route: String,
 )
 
 val breakingBadURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0af_n3mCP4xU13L16npq1L3u3VjFfVq5n1g&s"
@@ -15,12 +16,12 @@ val tedLassoURL = "https://m.media-amazon.com/images/M/MV5BZmI3YWVhM2UtNDZjMC00Y
 val theBoysURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdQknR4Uj_8f45Nnz_iyX0pmkYORI79jcuTw&s"
 
 val mySelectedSeries = listOf(
-    ItemsSeries("Во все тяжкие", breakingBadURL),
-    ItemsSeries("Сопрано", theSopranosURL),
-    ItemsSeries("Очень странные дела", strangerThingsURL),
-    ItemsSeries("Йеллоустоун", yellowstoneURL),
-    ItemsSeries("Лучше звоните Солу", betterCallSaulURL),
-    ItemsSeries("Офис", theOfficeURL),
-    ItemsSeries("Тед Лассо", tedLassoURL),
-    ItemsSeries("Пацаны", theBoysURL),
+    ItemsSeries("Во все тяжкие", breakingBadURL, "breakingBadRoute"),
+    ItemsSeries("Сопрано", theSopranosURL, "sopranoRoute"),
+    ItemsSeries("Очень странные дела", strangerThingsURL, "strangerThingsRoute"),
+    ItemsSeries("Йеллоустоун", yellowstoneURL, "yellowstoneROute"),
+    ItemsSeries("Лучше звоните Солу", betterCallSaulURL, "betterCallSaulRoute"),
+    ItemsSeries("Офис", theOfficeURL, "officeRoute"),
+    ItemsSeries("Тед Лассо", tedLassoURL, "tedLassoRoute"),
+    ItemsSeries("Пацаны", theBoysURL, "theBoysRoute"),
 )

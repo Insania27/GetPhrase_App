@@ -32,7 +32,7 @@ import com.example.getphraseapp.R
 @Composable
 fun ProfileScreen(){
     Box(
-        modifier = Modifier.fillMaxSize().background(color = Color.DarkGray)
+        modifier = Modifier.fillMaxSize().background(color = Color.White)
     ) {
         Column(
             modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 100.dp)

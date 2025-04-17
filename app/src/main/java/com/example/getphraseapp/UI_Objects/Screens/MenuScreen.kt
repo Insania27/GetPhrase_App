@@ -56,12 +56,12 @@ fun MenuScreen(navController: NavController) {
     val games = gamesState.value ?: emptyList()
 
     LaunchedEffect(Unit) {
-        viewModel.fetchGames()
+        viewModel.fetchAssassinGame()
     }
 
     val assassinCreed = App(
         appid = 3035570,
-        name = "Assassin's Creed",
+        name = "Игры",
         route = "gamesScreen",
         isMovie = false,
         imageUrl = "https://cdn.akamai.steamstatic.com/steam/apps/3035570/header.jpg"
@@ -86,7 +86,7 @@ fun MenuScreen(navController: NavController) {
         )
     )
 
-    Column(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
 
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(combinedGames) { game ->
@@ -97,8 +97,8 @@ fun MenuScreen(navController: NavController) {
                         .padding(8.dp)
                         .clickable { navController.navigate("gamesScreen") },
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Color.White,
+                        contentColor = Color.Black
                     )
                 ) {
                     Column(
@@ -132,7 +132,7 @@ fun MenuScreen(navController: NavController) {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize().background(color = Color.Black),
+            modifier = Modifier.fillMaxSize().background(color = Color.White),
             contentPadding = PaddingValues(8.dp)
         ) {
             gridItems(seriesForList) { series ->
@@ -145,8 +145,8 @@ fun MenuScreen(navController: NavController) {
                         .padding(8.dp)
                         .clickable { navController.navigate(series.route) },
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                        containerColor = Color.White,
+                        contentColor = Color.Black
                     )
                 ) {
                     Column(

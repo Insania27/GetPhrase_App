@@ -36,17 +36,17 @@ import com.example.getphraseapp.Items.mySelectedGames
 fun GamesScreen(navController: NavController) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize().background(color = Color.Black),
+        modifier = Modifier.fillMaxSize().background(color = Color.White),
         contentPadding = PaddingValues(8.dp)
     ){
         items(mySelectedGames){ game ->
             Card(
                 modifier = Modifier.padding(6.dp).fillMaxWidth()
-                    .aspectRatio(0.85f)
+                    .aspectRatio(0.75f)
                     .clip(RoundedCornerShape(20.dp)),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.Black,
-                    contentColor = Color.White
+                    containerColor = Color.White,
+                    contentColor = Color.Black
                 )
             ){
                 Column(
@@ -54,14 +54,16 @@ fun GamesScreen(navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = game.name)
                     AsyncImage(
                         model = game.image,
                         contentDescription = "Фото игры",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(0.9f)
                             .clip(RoundedCornerShape(20.dp)),
                     )
+                    Text(text = game.name)
                 }
             }
         }

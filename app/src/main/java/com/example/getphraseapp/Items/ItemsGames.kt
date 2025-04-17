@@ -2,7 +2,8 @@ package com.example.getphraseapp.Items
 
 data class GamesItems(
     val name: String,
-    val image: String
+    val image: String,
+    val route: String,
 )
 
 val godOfWarURL = "https://upload.wikimedia.org/wikipedia/en/thumb/e/ee/God_of_War_Ragnar%C3%B6k_cover.jpg/250px-God_of_War_Ragnar%C3%B6k_cover.jpg"
@@ -11,9 +12,9 @@ val theWitcher = "https://assetsio.gnwcdn.com/unnamed-(1)_6w4PfVY.jpg?width=1200
 val horizon = "https://preview.redd.it/1k57ixpugdi81.png?width=1024&format=png&auto=webp&s=a3be15f67247d9498cd591752c341a3b2ea30be4"
 
 val mySelectedGames = listOf(
-    GamesItems("God Of War: Ragnarok", godOfWarURL ),
-    GamesItems("The Last Of Us 2", tlou2URL ),
-    GamesItems("The Witcher 3", theWitcher ),
-    GamesItems("Horizon: Forbidden West", horizon ),
+    GamesItems("God Of War: Ragnarok", godOfWarURL, "godOfWarRoute" ),
+    GamesItems("The Last Of Us 2", tlou2URL, "tlou2Route" ),
+    GamesItems("The Witcher 3", theWitcher, "theWitcher3Route" ),
+    GamesItems("Horizon: Forbidden West", horizon, "horizonRoute" ),
 
 )

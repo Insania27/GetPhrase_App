@@ -25,19 +25,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.getphraseapp.Items.mySelectedGames
-import com.example.getphraseapp.Items.mySelectedSeries
+import com.example.getphraseapp.Items.mySelectedMovies
 
 @Composable
-fun SeriesScreen(navController: NavController) {
+fun MoviesScreen(navController: NavController){
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize().background(color = Color.White),
         contentPadding = PaddingValues(8.dp)
     ){
-        items(mySelectedSeries){ series ->
+        items(mySelectedMovies){ movie ->
             Card(
                 modifier = Modifier.padding(6.dp).fillMaxWidth()
-                    .aspectRatio(0.7f)
+                    .aspectRatio(0.6f)
                     .clip(RoundedCornerShape(20.dp)),
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White,
@@ -50,14 +50,14 @@ fun SeriesScreen(navController: NavController) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     AsyncImage(
-                        model = series.image,
-                        contentDescription = "Фото сериала",
+                        model = movie.image,
+                        contentDescription = "Фото фильма",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxWidth()
-                            .aspectRatio(0.9f)
+                            .aspectRatio(0.7f)
                             .clip(RoundedCornerShape(20.dp)),
                     )
-                    Text(text = series.name)
+                    Text(text = movie.name)
                 }
             }
         }
