@@ -19,7 +19,7 @@ fun BottomNavigationBar(navController: NavHostController){
         BottomNavItem.Favorites,
         BottomNavItem.Profile
     )
-    NavigationBar (containerColor = Color(0xFF00fcb1)) {
+    NavigationBar (containerColor = Color(0xFF009EC7)) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination?.route
         items.forEach{item ->

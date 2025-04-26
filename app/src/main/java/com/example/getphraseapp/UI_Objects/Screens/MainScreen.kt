@@ -30,21 +30,30 @@ import com.example.getphraseapp.UI_Objects.ScreensOfItems.Series.TheOfficeScreen
 import com.example.getphraseapp.UI_Objects.ScreensOfItems.Series.TheSopranosScreen
 import com.example.getphraseapp.UI_Objects.ScreensOfItems.Series.YellowstoneScreen
 import com.example.getphraseapp.ViewModel.AppsViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun MainScreen(){
     val navController = rememberNavController()
+    val auth = FirebaseAuth.getInstance()
+
+    val startDestination = if (auth.currentUser == null) {
+        "loginScreen"
+    } else {
+        BottomNavItem.Profile.route
+    }
+
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = BottomNavItem.Profile.route,
+            startDestination = startDestination,
             Modifier.padding(innerPadding)
         ){
             composable (BottomNavItem.Menu.route) { MenuScreen(navController) }
             composable (BottomNavItem.Favorites.route) { FavoritesScreen() }
-            composable (BottomNavItem.Profile.route) { ProfileScreen() }
+            composable (BottomNavItem.Profile.route) { ProfileScreen(navController) }
             composable ("gamesScreen") { GamesScreen(navController) }
             composable ("seriesScreen") { SeriesScreen(navController) }
             composable ("moviesScreen") { MoviesScreen(navController) }
@@ -53,6 +62,17 @@ fun MainScreen(){
                 val viewModel: AppsViewModel = viewModel()
                 SearchScreen(navController = navController, viewModel = viewModel)
             }
+
+
+            composable("loginScreen") { LoginScreen(navController, auth) }
+            composable("registerScreen") { RegisterScreen(navController, auth) }
+
+
+
+
+
+
+
 
             composable("inceptionRoute") { InceptionScreen() }
             composable("pulpFictionRoute") { PulpFictionScreen() }

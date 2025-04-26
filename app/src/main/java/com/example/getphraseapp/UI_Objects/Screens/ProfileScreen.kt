@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,22 +28,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.getphraseapp.R
+import com.google.firebase.auth.FirebaseAuth
+
 
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(navController: NavController){
+
+    val auth = FirebaseAuth.getInstance()
+
     Box(
         modifier = Modifier.fillMaxSize().background(color = Color.White)
     ) {
         Column(
             modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 100.dp)
                 .clip(RoundedCornerShape(15.dp))
-                .background(color = Color(0xFF00fcb1))
+                .background(color = Color(0xFF009EC7))
                 .width(300.dp)
                 .height(500.dp)
         ) {
             Row(
-                modifier = Modifier.height(50.dp).fillMaxWidth().background(color = Color(0xFF00fcb1)),
+                modifier = Modifier.height(50.dp).fillMaxWidth().background(color = Color(0xFF009EC7)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -76,7 +83,7 @@ fun ProfileScreen(){
             )
 
             Row(
-                modifier = Modifier.height(50.dp).fillMaxWidth().background(color = Color(0xFF00fcb1)),
+                modifier = Modifier.height(50.dp).fillMaxWidth().background(color = Color(0xFF009EC7)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
@@ -101,6 +108,23 @@ fun ProfileScreen(){
                     modifier = Modifier.padding(end = 20.dp)
                 )
             }
+
+
         }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Button(
+            onClick = {
+                auth.signOut()
+                navController.navigate("loginScreen") {
+                    popUpTo(0)
+                }
+            },
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
+        ) {
+            Text(text = "Выйти из аккаунта")
+        }
+
     }
 }

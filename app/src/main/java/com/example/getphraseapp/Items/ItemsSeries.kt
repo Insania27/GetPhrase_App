@@ -19,7 +19,7 @@ val mySelectedSeries = listOf(
     ItemsSeries("Во все тяжкие", breakingBadURL, "breakingBadRoute"),
     ItemsSeries("Сопрано", theSopranosURL, "theSopranosRoute"),
     ItemsSeries("Очень странные дела", strangerThingsURL, "strangerThingsRoute"),
-    ItemsSeries("Йеллоустоун", yellowstoneURL, "yellowstoneROute"),
+    ItemsSeries("Йеллоустоун", yellowstoneURL, "yellowstoneRoute"),
     ItemsSeries("Лучше звоните Солу", betterCallSaulURL, "betterCallSaulRoute"),
     ItemsSeries("Офис", theOfficeURL, "theOfficeRoute"),
     ItemsSeries("Тед Лассо", tedLassoURL, "tedLassoRoute"),

@@ -1,1 +1,5 @@
 /build
+
+app/src/main/java/com/example/getphraseapp/Data/Network/EmailVerificationAPI.kt
+
+app/google-services.json
