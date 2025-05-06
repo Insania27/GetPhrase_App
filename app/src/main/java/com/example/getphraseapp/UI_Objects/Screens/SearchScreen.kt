@@ -72,8 +72,15 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            placeholder = { Text("Поиск игр, фильмов, сериалов") }
+                .padding(8.dp)
+                .clip(RoundedCornerShape(30.dp)),
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            ),
+            placeholder = { Text("Поиск игр, фильмов, сериалов")
+            }
         )
 
         LazyColumn(

@@ -64,8 +64,8 @@ fun MainScreen(){
             }
 
 
-            composable("loginScreen") { LoginScreen(navController, auth) }
-            composable("registerScreen") { RegisterScreen(navController, auth) }
+            composable("loginScreen") { LoginScreen(navController) }
+            composable("registerScreen") { RegisterScreen(navController) }
 
 
 

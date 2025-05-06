@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,12 +33,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
@@ -51,7 +57,6 @@ import com.example.getphraseapp.ViewModel.GameViewModelFactory
 fun MenuScreen(navController: NavController) {
     val factory = remember { GameViewModelFactory(RetrofitClient.apiService) }
     val viewModel: GameViewModel = viewModel(factory = factory)
-
     val gamesState = viewModel.games.observeAsState()
     val games = gamesState.value ?: emptyList()
 
@@ -59,123 +64,165 @@ fun MenuScreen(navController: NavController) {
         viewModel.fetchAssassinGame()
     }
 
-    val assassinCreed = App(
-        appid = 3035570,
-        name = "Игры",
-        route = "gamesScreen",
-        isMovie = false,
-        imageUrl = "https://cdn.akamai.steamstatic.com/steam/apps/3035570/header.jpg"
-    )
-
-    val combinedGames = games + assassinCreed
-
-    val seriesForList = listOf(
-        App(
-            appid = 169,
-            name = "Сериалы",
-            route = "seriesScreen",
-            isMovie = true,
-            imageUrl = "http://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg"
-        ),
-        App(
-            appid = null,
-            name = "Фильмы",
-            route = "moviesScreen",
-            isMovie = true,
-            imageUrl = "https://i.ebayimg.com/images/g/B8oAAOSw2fdg5A-h/s-l1200.jpg"
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF5F5F5))
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Главное меню",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 24.dp),
+            color = Color.Black
         )
-    )
 
-    Column(modifier = Modifier.fillMaxSize().background(Color.White)) {
 
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(combinedGames) { game ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(250.dp)
-                        .padding(8.dp)
-                        .clickable { navController.navigate("gamesScreen") },
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color.White,
-                        contentColor = Color.Black
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = game.name,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-
-                        Image(
-                            painter = rememberAsyncImagePainter(
-                                ImageRequest.Builder(LocalContext.current)
-                                    .data(game.finalImageUrl)
-                                    .crossfade(true)
-                                    .build()
-                            ),
-                            contentDescription = "Обложка ${game.name}",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(20.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
-            }
-        }
+        GamesCategoryCard(
+            title = "Игры",
+            imageUrl = "https://cdn.akamai.steamstatic.com/steam/apps/668580/header.jpg",
+            onClick = { navController.navigate("gamesScreen") },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
 
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize().background(color = Color.White),
-            contentPadding = PaddingValues(8.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.weight(1f)
         ) {
-            gridItems(seriesForList) { series ->
-                val imageUrl = series.finalImageUrl
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                        .padding(8.dp)
-                        .clickable { navController.navigate(series.route) },
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color.White,
-                        contentColor = Color.Black
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = series.name,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-
-                        Image(
-                            painter = rememberAsyncImagePainter(
-                                ImageRequest.Builder(LocalContext.current)
-                                    .data(imageUrl)
-                                    .crossfade(true)
-                                    .build()
-                            ),
-                            contentDescription = "Обложка ${series.name}",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(220.dp)
-                                .clip(RoundedCornerShape(20.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
+            item {
+                MoviesAndSeriesCategoryCard(
+                    title = "Фильмы",
+                    imageUrl = "https://i.ebayimg.com/images/g/B8oAAOSw2fdg5A-h/s-l1200.jpg",
+                    onClick = { navController.navigate("moviesScreen") }
+                )
             }
+            item {
+                MoviesAndSeriesCategoryCard(
+                    title = "Сериалы",
+                    imageUrl = "http://static.tvmaze.com/uploads/images/original_untouched/0/2400.jpg",
+                    onClick = { navController.navigate("seriesScreen") }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun GamesCategoryCard(
+    title: String,
+    imageUrl: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(2.1f),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable(onClick = onClick)
+        ) {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(imageUrl)
+                        .crossfade(true)
+                        .build()
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.5F)),
+                            startY = 0.5f
+                        )
+                    )
+            )
+
+
+            Text(
+                text = title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(16.dp)
+            )
+        }
+    }
+}
+
+
+@Composable
+fun MoviesAndSeriesCategoryCard(
+    title: String,
+    imageUrl: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(0.7f),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable(onClick = onClick)
+        ) {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(imageUrl)
+                        .crossfade(true)
+                        .build()
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.5F)),
+                            startY = 0.5f
+                        )
+                    )
+            )
+
+
+            Text(
+                text = title,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(16.dp)
+            )
         }
     }
 }

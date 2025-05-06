@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -41,90 +42,110 @@ fun ProfileScreen(navController: NavController){
     Box(
         modifier = Modifier.fillMaxSize().background(color = Color.White)
     ) {
-        Column(
-            modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 100.dp)
-                .clip(RoundedCornerShape(15.dp))
-                .background(color = Color(0xFF009EC7))
-                .width(300.dp)
-                .height(500.dp)
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier.height(50.dp).fillMaxWidth().background(color = Color(0xFF009EC7)),
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 50.dp)
+                    .clip(RoundedCornerShape(15.dp))
+                    .background(color = Color.Black)
+                    .width(300.dp)
+                    .height(350.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Иконка изученного",
-                    modifier = Modifier.padding(10.dp).size(30.dp)
-                )
-
-                Text(
-                    text = "Изучено",
-                    modifier = Modifier.width(100.dp)
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "Иконка стрелки",
-                    modifier = Modifier.padding(end = 20.dp)
-                )
-
-            }
-
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(horizontal = 15.dp)
-                    .height(1.dp)
-                    .fillMaxWidth(),
-                thickness = 1.dp,
-                color = Color.DarkGray
-            )
-
-            Row(
-                modifier = Modifier.height(50.dp).fillMaxWidth().background(color = Color(0xFF009EC7)),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_process),
-                    contentDescription = "Иконка в процессе",
-                    modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp).size(30.dp),
-                    colorFilter = ColorFilter.tint(
-                        color = Color.Black
+                Row(
+                    modifier = Modifier.height(50.dp).fillMaxWidth()
+                        .background(color = Color.Black),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Иконка изученного",
+                        modifier = Modifier.padding(10.dp).size(30.dp),
+                        tint = Color.White
                     )
+
+                    Text(
+                        text = "Изучено",
+                        modifier = Modifier.width(100.dp),
+                        color = Color.White
+
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f).background(Color.White))
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = "Иконка стрелки",
+                        modifier = Modifier.padding(end = 20.dp),
+                        tint = Color.White
+                    )
+
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(horizontal = 15.dp)
+                        .height(1.dp)
+                        .fillMaxWidth(),
+                    thickness = 1.dp,
+                    color = Color.DarkGray
                 )
 
-                Text(
-                    text = "В процессе",
-                    modifier = Modifier.width(100.dp)
-                )
+                Row(
+                    modifier = Modifier.height(50.dp).fillMaxWidth()
+                        .background(color = Color.Black),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_process),
+                        contentDescription = "Иконка в процессе",
+                        modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp).size(30.dp),
+                        colorFilter = ColorFilter.tint(
+                            color = Color.White
+                        )
+                    )
 
-                Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = "В процессе",
+                        modifier = Modifier.width(100.dp),
+                        color = Color.White
+                    )
 
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "Иконка стрелки",
-                    modifier = Modifier.padding(end = 20.dp)
-                )
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = "Иконка стрелки",
+                        modifier = Modifier.padding(end = 20.dp)
+                    )
+                }
+
+
             }
 
+            Spacer(modifier = Modifier.height(40.dp).background(Color.White))
 
+            Button(
+                onClick = {
+                    auth.signOut()
+                    navController.navigate("loginScreen") {
+                        popUpTo(0)
+                    }
+                },
+                modifier = Modifier.width(250.dp).padding(horizontal = 20.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xffe60000),
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "Выйти из аккаунта")
+            }
         }
 
-        Spacer(modifier = Modifier.height(40.dp))
 
-        Button(
-            onClick = {
-                auth.signOut()
-                navController.navigate("loginScreen") {
-                    popUpTo(0)
-                }
-            },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)
-        ) {
-            Text(text = "Выйти из аккаунта")
-        }
 
     }
 }
+
+
