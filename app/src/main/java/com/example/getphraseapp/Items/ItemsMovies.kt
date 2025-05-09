@@ -2,6 +2,7 @@ package com.example.getphraseapp.Items
 
 
 data class ItemsMovies(
+    val id: String,
     val name: String,
     val image: String,
     val route: String,
@@ -16,10 +17,10 @@ val fightClubURL = "https://m.media-amazon.com/images/I/61sNuDFJlWL._AC_UF894,10
 
 
 val mySelectedMovies = listOf(
-    ItemsMovies("Начало", inceptionURL, "inceptionRoute"),
-    ItemsMovies("Криминальное чтиво", pulpFictionURL, "pulpFictionRoute"),
-    ItemsMovies("Интерестеллар", interstellarURL, "interstellarRoute"),
-    ItemsMovies("Форрест Гамп", forrestGumpURL, "forrestGumpRoute"),
-    ItemsMovies("Отступники", theDepartedURL, "theDepartedRoute"),
-    ItemsMovies("Бойцовский клуб", fightClubURL, "fightClubRoute"),
+    ItemsMovies("inception","Начало", inceptionURL, "inceptionRoute"),
+    ItemsMovies("pulpFiction","Криминальное чтиво", pulpFictionURL, "pulpFictionRoute"),
+    ItemsMovies("interstellar","Интерестеллар", interstellarURL, "interstellarRoute"),
+    ItemsMovies("forrestGump","Форрест Гамп", forrestGumpURL, "forrestGumpRoute"),
+    ItemsMovies("theDeparted","Отступники", theDepartedURL, "theDepartedRoute"),
+    ItemsMovies("fightClub","Бойцовский клуб", fightClubURL, "fightClubRoute"),
 )

@@ -31,19 +31,9 @@ class MainActivity : ComponentActivity() {
 
 
 
-@Composable
-fun SearchScreen(){
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Поиск")
-    }
-}
 
-@Composable
-fun FavoritesScreen(){
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Избранное")
-    }
-}
+
+
 
 
 

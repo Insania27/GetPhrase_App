@@ -8,7 +8,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.getphraseapp.FavoritesScreen
 import com.example.getphraseapp.Navigation.BottomNavItem
 import com.example.getphraseapp.Navigation.BottomNavigationBar
 import com.example.getphraseapp.UI_Objects.ScreensOfItems.Games.GodOfWarScreen
@@ -52,8 +51,8 @@ fun MainScreen(){
             Modifier.padding(innerPadding)
         ){
             composable (BottomNavItem.Menu.route) { MenuScreen(navController) }
-            composable (BottomNavItem.Favorites.route) { FavoritesScreen() }
             composable (BottomNavItem.Profile.route) { ProfileScreen(navController) }
+            composable (BottomNavItem.Favorites.route) { FavoritesScreen(navController) }
             composable ("gamesScreen") { GamesScreen(navController) }
             composable ("seriesScreen") { SeriesScreen(navController) }
             composable ("moviesScreen") { MoviesScreen(navController) }

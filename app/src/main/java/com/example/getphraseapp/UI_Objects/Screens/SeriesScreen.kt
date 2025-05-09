@@ -15,10 +15,19 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,32 +38,65 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.getphraseapp.Items.mySelectedGames
 import com.example.getphraseapp.Items.mySelectedSeries
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun SeriesScreen(navController: NavController) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize().background(color = Color.White),
-        contentPadding = PaddingValues(8.dp)
-    ){
-        items(mySelectedSeries){ serie ->
+    val context = LocalContext.current
+    val userId = Firebase.auth.currentUser?.uid ?: ""
+
+    val favoritesViewModel: FavoritesViewModel = viewModel(
+        modelClass = FavoritesViewModel::class.java,
+        factory    = FavoritesViewModelFactory(context, userId)
+    )
+
+
+    LaunchedEffect(userId) {
+        favoritesViewModel.loadFavorites()
+    }
+
+    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
+        items(mySelectedSeries) { serie ->
+            val isFav by remember(userId, favoritesViewModel.favorites) {
+                derivedStateOf {
+                    userId.isNotBlank() && favoritesViewModel.favorites.any { it.itemId == serie.id && it.itemType == "series" }
+                }
+            }
 
             SerieCard(
                 serie.name,
                 serie.image,
-                onClick = { navController.navigate("${serie.route}") }
+                isFavorite = isFav,
+                onFavoriteClick = {
+                    if (userId.isNotBlank()) {
+                        val item = FavoriteItem(
+                            userId = userId,
+                            itemId = serie.id,
+                            itemType = "series",
+                            title = serie.name,
+                            imageUrl = serie.image,
+                            route = serie.route
+
+                        )
+                        favoritesViewModel.toggleFavorite(item)
+                    } else {
+                        navController.navigate("loginScreen")
+                    }
+                },
+                onClick = { navController.navigate(serie.route) }
             )
-
         }
-
     }
 }
+
 
 
 
@@ -62,6 +104,8 @@ fun SeriesScreen(navController: NavController) {
 fun SerieCard(
     title: String,
     imageUrl: String,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
     onClick: () -> Unit,
 ) {
     Card(
@@ -101,7 +145,6 @@ fun SerieCard(
                     )
             )
 
-
             Text(
                 text = title,
                 fontSize = 20.sp,
@@ -111,6 +154,19 @@ fun SerieCard(
                     .align(Alignment.BottomStart)
                     .padding(16.dp)
             )
+
+            IconButton(
+                onClick = onFavoriteClick,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+            ) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    contentDescription = if (isFavorite) "Удалить из избранного" else "Добавить в избранное",
+                    tint = Color.Red
+                )
+            }
         }
     }
 }
