@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GetPhraseAppTheme {
+            GetPhraseAppTheme(dynamicColor = false) {
                 MainScreen()
 
             }

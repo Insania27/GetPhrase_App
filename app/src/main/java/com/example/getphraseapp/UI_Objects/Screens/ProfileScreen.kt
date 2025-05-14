@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.getphraseapp.R
@@ -40,7 +44,9 @@ fun ProfileScreen(navController: NavController){
     val auth = FirebaseAuth.getInstance()
 
     Box(
-        modifier = Modifier.fillMaxSize().background(color = Color.White)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.primary)
     ) {
         Column (
             modifier = Modifier.fillMaxSize(),
@@ -49,82 +55,26 @@ fun ProfileScreen(navController: NavController){
             Column(
                 modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 50.dp)
                     .clip(RoundedCornerShape(15.dp))
-                    .background(color = Color.Black)
+                    .background(color = MaterialTheme.colorScheme.secondary)
                     .width(300.dp)
                     .height(350.dp)
             ) {
-                Row(
-                    modifier = Modifier.height(50.dp).fillMaxWidth()
-                        .background(color = Color.Black),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "Иконка изученного",
-                        modifier = Modifier.padding(10.dp).size(30.dp),
-                        tint = Color.White
-                    )
 
-                    Text(
-                        text = "Изучено",
-                        modifier = Modifier.width(100.dp),
-                        color = Color.White
-
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f).background(Color.White))
-
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = "Иконка стрелки",
-                        modifier = Modifier.padding(end = 20.dp),
-                        tint = Color.White
-                    )
-
-                }
-
-                HorizontalDivider(
-                    modifier = Modifier
-                        .padding(horizontal = 15.dp)
-                        .height(1.dp)
-                        .fillMaxWidth(),
-                    thickness = 1.dp,
-                    color = Color.DarkGray
+                RowOfMenu(
+                    iconIcon = Icons.Default.Check,
+                    text = "Изучено"
                 )
 
-                Row(
-                    modifier = Modifier.height(50.dp).fillMaxWidth()
-                        .background(color = Color.Black),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_process),
-                        contentDescription = "Иконка в процессе",
-                        modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp).size(30.dp),
-                        colorFilter = ColorFilter.tint(
-                            color = Color.White
-                        )
-                    )
+                Divider()
 
-                    Text(
-                        text = "В процессе",
-                        modifier = Modifier.width(100.dp),
-                        color = Color.White
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = "Иконка стрелки",
-                        modifier = Modifier.padding(end = 20.dp)
-                    )
-                }
-
+                RowOfMenu(
+                    painterIcon = painterResource(id = R.drawable.ic_process),
+                    text = "В процессе"
+                )
 
             }
 
-            Spacer(modifier = Modifier.height(40.dp).background(Color.White))
+            Spacer(modifier = Modifier.height(40.dp).background(MaterialTheme.colorScheme.primary))
 
             Button(
                 onClick = {
@@ -133,7 +83,7 @@ fun ProfileScreen(navController: NavController){
                         popUpTo(0)
                     }
                 },
-                modifier = Modifier.width(250.dp).padding(horizontal = 20.dp),
+                modifier = Modifier.width(215.dp).padding(horizontal = 20.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xffe60000),
                     contentColor = Color.White
@@ -149,3 +99,63 @@ fun ProfileScreen(navController: NavController){
 }
 
 
+@Composable
+fun RowOfMenu(
+    painterIcon: Painter? = null,
+    iconIcon: ImageVector? = null,
+    text: String,
+    arrow: ImageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight
+) {
+    Row(
+        modifier = Modifier.height(50.dp).fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.secondary),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (painterIcon != null) {
+            Image(
+                painter = painterIcon,
+                contentDescription = null,
+                modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp).size(30.dp),
+                colorFilter = ColorFilter.tint(
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            )
+        } else if (iconIcon != null) {
+            Icon(
+                imageVector = iconIcon,
+                contentDescription = null,
+                modifier = Modifier.padding(10.dp).size(30.dp),
+                tint = MaterialTheme.colorScheme.onSecondary
+            )
+        }
+
+
+        Text(
+            text = text,
+            modifier = Modifier.width(100.dp),
+            color = MaterialTheme.colorScheme.onSecondary,
+            fontWeight = FontWeight.Bold,
+        )
+
+        Spacer(modifier = Modifier.weight(1f).background(MaterialTheme.colorScheme.onSecondary))
+
+        Icon(
+            imageVector = arrow,
+            contentDescription = "Иконка стрелки",
+            modifier = Modifier.padding(end = 20.dp)
+        )
+    }
+}
+
+
+@Composable
+fun Divider(){
+    HorizontalDivider(
+        modifier = Modifier
+            .padding(horizontal = 15.dp)
+            .height(1.dp)
+            .fillMaxWidth(),
+        thickness = 1.dp,
+        color = MaterialTheme.colorScheme.onSecondary
+    )
+}

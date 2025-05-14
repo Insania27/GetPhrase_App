@@ -63,7 +63,10 @@ import com.example.getphraseapp.ViewModel.AppsViewModel
 fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
     val searchQuery = remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(color = MaterialTheme.colorScheme.primary)
+    ) {
         TextField(
             value = searchQuery.value,
             onValueChange = {
@@ -72,21 +75,30 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
             },
             modifier = Modifier
                 .fillMaxWidth()
+                .background(color = MaterialTheme.colorScheme.primary)
                 .padding(8.dp)
                 .clip(RoundedCornerShape(30.dp)),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                cursorColor = MaterialTheme.colorScheme.onSecondary
             ),
-            placeholder = { Text("Поиск игр, фильмов, сериалов")
+
+            placeholder = {
+                Text(
+                    text = "Поиск игр, фильмов, сериалов",
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
             }
         )
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(color = MaterialTheme.colorScheme.primary),
             contentPadding = PaddingValues(8.dp)
         ) {
             items(viewModel.searchResults) { app ->
@@ -94,12 +106,13 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
                     modifier = Modifier
                         .padding(6.dp)
                         .fillMaxWidth()
+                        .background(color = MaterialTheme.colorScheme.primary)
                         .height(100.dp)
                         .clip(RoundedCornerShape(20.dp))
                         .clickable { navController.navigate(app.route) },
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.White,
-                        contentColor = Color.Black
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
                     Row(

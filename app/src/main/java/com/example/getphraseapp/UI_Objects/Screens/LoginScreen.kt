@@ -1,5 +1,6 @@
 package com.example.getphraseapp.UI_Objects.Screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -92,7 +94,9 @@ fun LoginScreen(navController: NavController){
     val errorMessage = remember { mutableStateOf<String?>(null) }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.primary),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -103,11 +107,16 @@ fun LoginScreen(navController: NavController){
             onValueChange = {
                 email.value = it
             },
-            label = { Text("Логин") },
+            label = { Text("Логин", color = MaterialTheme.colorScheme.onSecondary) },
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                cursorColor = MaterialTheme.colorScheme.onSecondary,
+                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary
             )
         )
 
@@ -119,11 +128,16 @@ fun LoginScreen(navController: NavController){
             onValueChange = {
                 password.value = it
             },
-            label = { Text("Пароль") },
+            label = { Text("Пароль", color = MaterialTheme.colorScheme.onSecondary) },
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
+                disabledIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                cursorColor = MaterialTheme.colorScheme.onSecondary,
+                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary
             )
         )
 
@@ -152,11 +166,11 @@ fun LoginScreen(navController: NavController){
             signIn(auth, email.value, password.value, errorMessage, navController)
         },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black,
+                containerColor = MaterialTheme.colorScheme.onPrimary,
                 contentColor = Color.White
             )
         ){
-            Text(text = "Войти")
+            Text(text = "Войти", fontWeight = FontWeight.Bold)
         }
     }
 }

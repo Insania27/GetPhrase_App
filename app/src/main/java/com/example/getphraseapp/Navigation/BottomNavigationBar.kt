@@ -2,6 +2,7 @@ package com.example.getphraseapp.Navigation
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -30,7 +31,7 @@ fun BottomNavigationBar(navController: NavHostController) {
 
     NavigationBar( modifier = Modifier
         .shadow(elevation = 30.dp),
-        containerColor = Color.White
+        containerColor = MaterialTheme.colorScheme.primary
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination?.route
@@ -40,10 +41,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                 label = { Text(item.title) },
                 selected = currentDestination == item.route,
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color.Gray,
-                    unselectedIconColor = Color.Black,
-                    selectedTextColor = Color.Gray,
-                    unselectedTextColor = Color.Black,
+                    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                    unselectedIconColor = Color.Gray,
+                    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    unselectedTextColor = Color.Gray,
                     indicatorColor = Color.Transparent
                 ),
                 onClick = {
