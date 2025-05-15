@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.getphraseapp.Navigation.BottomNavItem
 import com.example.getphraseapp.Navigation.BottomNavigationBar
+import com.example.getphraseapp.UI_Objects.ScreensOfItems.Games.AtomicHeartScreen
 import com.example.getphraseapp.UI_Objects.ScreensOfItems.Games.GodOfWarScreen
 import com.example.getphraseapp.UI_Objects.ScreensOfItems.Games.HorzionScreen
 import com.example.getphraseapp.UI_Objects.ScreensOfItems.Games.TLOU2Screen
@@ -84,6 +85,7 @@ fun MainScreen(){
             composable("horizonRoute") { HorzionScreen() }
             composable("theWitcherRoute") { TheWitcherScreen() }
             composable("tlou2Route") { TLOU2Screen() }
+            composable("atomicHeartRoute") { AtomicHeartScreen() }
 
             composable("betterCallSaulRoute") { BetterCallSaulScreen() }
             composable("breakingBadRoute") { BreakingBadScreen() }
@@ -93,6 +95,7 @@ fun MainScreen(){
             composable("theOfficeRoute") { TheOfficeScreen() }
             composable("theSopranosRoute") { TheSopranosScreen() }
             composable("yellowStoneRoute") { YellowstoneScreen() }
+
 
 
 
