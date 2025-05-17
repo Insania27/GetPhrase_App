@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -43,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -60,6 +62,22 @@ import coil.compose.AsyncImage
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+
+
+class FavoritesViewModelFactory(
+    private val context: Context,
+    private val userId: String
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(FavoritesViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return FavoritesViewModel(context, userId) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+    }
+}
+
+
 
 @Entity(tableName = "favorites")
 data class FavoriteItem(
@@ -97,7 +115,7 @@ interface FavoriteDao {
 
 @Database(
     entities = [FavoriteItem::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -181,14 +199,25 @@ fun FavoritesScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.primary)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF1ABC9C),
+                            Color.LightGray,
+                        )
+                    )
+                )
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Чтобы увидеть избранное, пожалуйста, войдите")
+            Text("Чтобы увидеть избранное, войдите в аккаунт")
             Spacer(Modifier.height(8.dp))
-            Button(onClick = { navController.navigate("loginScreen") }) {
+            Button(onClick = { navController.navigate("loginScreen") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.onPrimary,
+                    contentColor = Color.White
+                )) {
                 Text("Войти")
             }
         }
@@ -216,7 +245,14 @@ fun FavoritesScreen(navController: NavController) {
             columns = GridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.primary),
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF1ABC9C),
+                            Color.LightGray,
+                        )
+                    )
+                ),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)

@@ -47,6 +47,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -63,9 +65,18 @@ import com.example.getphraseapp.ViewModel.AppsViewModel
 fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
     val searchQuery = remember { mutableStateOf("") }
 
+    val colors = listOf(Color(0xFF19B493), Color(0xFFDCDCDC))
+
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(color = MaterialTheme.colorScheme.primary)
+        .background(
+            Brush.verticalGradient(
+                colors = listOf(
+                    Color(0xFF1ABC9C),
+                    Color.LightGray,
+                )
+            )
+        )
     ) {
         TextField(
             value = searchQuery.value,
@@ -75,21 +86,21 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primary)
+                .background(color = Color(0xFF1ABC9C))
                 .padding(8.dp)
                 .clip(RoundedCornerShape(30.dp)),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                unfocusedContainerColor = Color(0xFF19A687),
+                focusedContainerColor = Color(0xFF19A687),
                 cursorColor = MaterialTheme.colorScheme.onSecondary
             ),
 
             placeholder = {
                 Text(
-                    text = "Поиск игр, фильмов, сериалов",
+                    text = "Поиск",
                     color = MaterialTheme.colorScheme.onSecondary
                 )
             }
@@ -98,7 +109,14 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colorScheme.primary),
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF1ABC9C),
+                            Color.LightGray,
+                        )
+                    )
+                ),
             contentPadding = PaddingValues(8.dp)
         ) {
             items(viewModel.searchResults) { app ->
@@ -106,12 +124,11 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
                     modifier = Modifier
                         .padding(6.dp)
                         .fillMaxWidth()
-                        .background(color = MaterialTheme.colorScheme.primary)
+                        .clip(RoundedCornerShape(16.dp)).background(Brush.verticalGradient(colors))
                         .height(100.dp)
-                        .clip(RoundedCornerShape(20.dp))
                         .clickable { navController.navigate(app.route) },
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
+                        containerColor = Color.Transparent,
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
@@ -126,7 +143,7 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
                             modifier = Modifier
                                 .fillMaxHeight()
                                 .aspectRatio(0.9f)
-                                .clip(RoundedCornerShape(20.dp))
+                                .clip(RoundedCornerShape(16.dp))
                         )
 
                         Spacer(modifier = Modifier.width(12.dp))

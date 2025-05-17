@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -96,7 +97,14 @@ fun LoginScreen(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary),
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF1ABC9C),
+                        Color.LightGray,
+                    )
+                )
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -112,12 +120,10 @@ fun LoginScreen(navController: NavController){
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                cursorColor = MaterialTheme.colorScheme.onSecondary,
-                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary
-            )
+                unfocusedContainerColor = Color(0xFF19A687),
+                focusedContainerColor = Color(0xFF19A687),
+                cursorColor = MaterialTheme.colorScheme.onSecondary
+            ),
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -133,12 +139,10 @@ fun LoginScreen(navController: NavController){
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                cursorColor = MaterialTheme.colorScheme.onSecondary,
-                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary
-            )
+                unfocusedContainerColor = Color(0xFF19A687),
+                focusedContainerColor = Color(0xFF19A687),
+                cursorColor = MaterialTheme.colorScheme.onSecondary
+            ),
         )
 
         errorMessage.value?.let { message ->

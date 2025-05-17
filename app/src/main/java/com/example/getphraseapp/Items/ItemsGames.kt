@@ -1,5 +1,7 @@
 package com.example.getphraseapp.Items
 
+import androidx.compose.runtime.Composable
+
 data class GamesItems(
     val id: String,
     val name: String,

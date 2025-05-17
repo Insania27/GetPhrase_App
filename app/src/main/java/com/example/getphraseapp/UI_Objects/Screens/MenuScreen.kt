@@ -53,6 +53,7 @@ import com.example.getphraseapp.Data.Network.RetrofitClient
 import com.example.getphraseapp.Navigation.Screen
 import com.example.getphraseapp.ViewModel.GameViewModel
 import com.example.getphraseapp.ViewModel.GameViewModelFactory
+import okhttp3.internal.wait
 
 @Composable
 fun MenuScreen(navController: NavController) {
@@ -68,15 +69,22 @@ fun MenuScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(16.dp)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF1ABC9C),
+                        Color.LightGray,
+                    )
+                )
+            )
+            .padding(20.dp)
     ) {
         Text(
             text = "Главное меню",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp),
-            color = MaterialTheme.colorScheme.onPrimary
+            color = Color.White
         )
 
 
@@ -124,7 +132,7 @@ fun GamesCategoryCard(
             .fillMaxWidth()
             .aspectRatio(2.1f),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Box(
@@ -227,3 +235,6 @@ fun MoviesAndSeriesCategoryCard(
         }
     }
 }
+
+
+

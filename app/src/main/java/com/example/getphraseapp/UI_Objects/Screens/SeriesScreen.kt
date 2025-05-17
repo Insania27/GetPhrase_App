@@ -1,5 +1,6 @@
 package com.example.getphraseapp.UI_Objects.Screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,10 +19,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -58,12 +62,27 @@ fun SeriesScreen(navController: NavController) {
         factory    = FavoritesViewModelFactory(context, userId)
     )
 
+    val learnedViewModel: LearnedViewModel = viewModel(
+        modelClass = LearnedViewModel::class.java,
+        factory    = LearnedViewModelFactory(context, userId)
+    )
+
 
     LaunchedEffect(userId) {
         favoritesViewModel.loadFavorites()
+        learnedViewModel.loadLearned()
     }
 
-    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.fillMaxSize()) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier
+        .fillMaxSize().background(
+            Brush.verticalGradient(
+                colors = listOf(
+                    Color(0xFF1ABC9C),
+                    Color.LightGray,
+                )
+            )
+        )
+    ) {
         items(mySelectedSeries) { serie ->
             val isFav by remember(userId, favoritesViewModel.favorites) {
                 derivedStateOf {
@@ -71,10 +90,18 @@ fun SeriesScreen(navController: NavController) {
                 }
             }
 
+            val isLear by remember(userId, favoritesViewModel.favorites) {
+                derivedStateOf {
+                    userId.isNotBlank() &&
+                            learnedViewModel.learned.any { it.itemId == serie.id }
+                }
+            }
+
             SerieCard(
                 serie.name,
                 serie.image,
                 isFavorite = isFav,
+                isLearned = isLear,
                 onFavoriteClick = {
                     if (userId.isNotBlank()) {
                         val item = FavoriteItem(
@@ -88,6 +115,23 @@ fun SeriesScreen(navController: NavController) {
                         )
                         favoritesViewModel.toggleFavorite(item)
                     } else {
+                        Toast.makeText(context, "Войдите в аккаунт", Toast.LENGTH_LONG).show()
+                        navController.navigate("loginScreen")
+                    }
+                },
+                onLearnedClick = {
+                    if (userId.isNotBlank()) {
+                        val item = LearnedItem(
+                            userId   = userId,
+                            itemId   = serie.id,
+                            itemType = "game",
+                            title    = serie.name,
+                            imageUrl = serie.image,
+                            route    = serie.route
+                        )
+                        learnedViewModel.toggleLearned(item)
+                    } else {
+                        Toast.makeText(context, "Войдите в аккаунт", Toast.LENGTH_LONG).show()
                         navController.navigate("loginScreen")
                     }
                 },
@@ -105,68 +149,85 @@ fun SerieCard(
     title: String,
     imageUrl: String,
     isFavorite: Boolean,
+    isLearned: Boolean,
     onFavoriteClick: () -> Unit,
+    onLearnedClick: () -> Unit,
     onClick: () -> Unit,
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(0.75f)
-            .padding(8.dp),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
-    ) {
-        Box(
+    Column {
+        Card(
             modifier = Modifier
-                .fillMaxSize()
-                .clickable(onClick = onClick)
+                .fillMaxWidth()
+                .aspectRatio(0.75f)
+                .padding(top = 24.dp, bottom = 4.dp, start = 8.dp, end = 8.dp),
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(imageUrl)
-                        .crossfade(true)
-                        .build()
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.5F)),
-                            startY = 0.5f
-                        )
-                    )
-            )
-
-            Text(
-                text = title,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(16.dp)
-            )
-
-            IconButton(
-                onClick = onFavoriteClick,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp)
+                    .clickable(onClick = onClick)
             ) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                    contentDescription = if (isFavorite) "Удалить из избранного" else "Добавить в избранное",
-                    tint = Color.Red
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(imageUrl)
+                            .crossfade(true)
+                            .build()
+                    ),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                 )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.5F)),
+                                startY = 0.5f
+                            )
+                        )
+                )
+
+                Text(
+                    text = title,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(16.dp)
+                )
+
+                IconButton(
+                    onClick = onFavoriteClick,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                        contentDescription = if (isFavorite) "Удалить из избранного" else "Добавить в избранное",
+                        tint = Color.Red
+                    )
+                }
             }
+        }
+        Button(
+            onClick = onLearnedClick,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.onPrimary,
+                contentColor = Color.White
+            )
+        ) {
+            Text(text = if (!isLearned) "В изученное" else "Изучено", color = Color.White)
         }
     }
 }

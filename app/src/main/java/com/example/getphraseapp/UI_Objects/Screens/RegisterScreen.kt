@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -21,61 +22,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
-//@Composable
-//fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
-//    var email by remember { mutableStateOf("") }
-//    var password by remember { mutableStateOf("") }
-//    var error by remember { mutableStateOf<String?>(null) }
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize().padding(16.dp),
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        TextField(
-//            value = email,
-//            onValueChange = { email = it },
-//            label = { Text("Email") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        TextField(
-//            value = password,
-//            onValueChange = { password = it },
-//            label = { Text("Пароль") },
-//            visualTransformation = PasswordVisualTransformation(),
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        error?.let {
-//            Text(text = it, color = MaterialTheme.colorScheme.error)
-//        }
-//        Button(
-//            onClick = {
-//
-//                checkIfEmailExists(email) { isValid ->
-//                    if (isValid) {
-//
-//                        auth.createUserWithEmailAndPassword(email, password)
-//                            .addOnCompleteListener { createTask ->
-//                                if (createTask.isSuccessful) {
-//                                    navController.navigate("mainScreen") {
-//                                        popUpTo(0)
-//                                    }
-//                                } else {
-//                                    error = createTask.exception?.message
-//                                }
-//                            }
-//                    } else {
-//                        error = "Почта не существует в интернете."
-//                    }
-//                }
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Регистрация")
-//        }
-//    }
-//}
 
 
 @Composable
@@ -92,7 +38,14 @@ fun RegisterScreen(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary),
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF1ABC9C),
+                        Color.LightGray,
+                    )
+                )
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -108,12 +61,10 @@ fun RegisterScreen(navController: NavController){
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                cursorColor = MaterialTheme.colorScheme.onSecondary,
-                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary
-            )
+                unfocusedContainerColor = Color(0xFF19A687),
+                focusedContainerColor = Color(0xFF19A687),
+                cursorColor = MaterialTheme.colorScheme.onSecondary
+            ),
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -129,12 +80,10 @@ fun RegisterScreen(navController: NavController){
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                cursorColor = MaterialTheme.colorScheme.onSecondary,
-                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
-                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary
-            )
+                unfocusedContainerColor = Color(0xFF19A687),
+                focusedContainerColor = Color(0xFF19A687),
+                cursorColor = MaterialTheme.colorScheme.onSecondary
+            ),
         )
 
         Spacer(modifier = Modifier.height(10.dp))

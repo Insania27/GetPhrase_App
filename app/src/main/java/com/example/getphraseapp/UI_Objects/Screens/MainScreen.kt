@@ -68,6 +68,8 @@ fun MainScreen(){
             composable("registerScreen") { RegisterScreen(navController) }
 
 
+            composable("learnedScreen") { LearnedScreen(navController) }
+
 
 
 
@@ -95,11 +97,6 @@ fun MainScreen(){
             composable("theOfficeRoute") { TheOfficeScreen() }
             composable("theSopranosRoute") { TheSopranosScreen() }
             composable("yellowStoneRoute") { YellowstoneScreen() }
-
-
-
-
-
         }
     }
 }

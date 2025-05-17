@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -16,7 +18,7 @@ fun PulpFictionScreen() {
     val words = listOf(
         "Big Kahuna Burger - Бургер «Большая Кахуна»",
         "Royale with Cheese - Рояль с сыром",
-        "Five-Dollar Shake - Пятьдолларовый молочный коктейль",
+        "Five-Dollar Shake - Пятидолларовый молочный коктейль",
         "Jackrabbit Slim’s - Дже́йкрэббит Слим’с",
         "Pumpkin’s Diner - Кафе «Тыква»",
         "Red Apple Cigarettes - Сигареты «Красное яблоко»",
@@ -76,7 +78,14 @@ fun PulpFictionScreen() {
 
     LazyColumn(modifier = Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colorScheme.primary)
+        .background(
+            Brush.verticalGradient(
+                colors = listOf(
+                    Color(0xFF1ABC9C),
+                    Color.LightGray,
+                )
+            )
+        )
         .padding(8.dp)
     ) { items(words) { pair ->
         Text(pair, color = MaterialTheme.colorScheme.onPrimary)

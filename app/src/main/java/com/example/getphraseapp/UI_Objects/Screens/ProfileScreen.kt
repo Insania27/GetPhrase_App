@@ -2,6 +2,7 @@ package com.example.getphraseapp.UI_Objects.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
@@ -46,7 +48,14 @@ fun ProfileScreen(navController: NavController){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF1ABC9C),
+                        Color.LightGray,
+                    )
+                )
+            )
     ) {
         Column (
             modifier = Modifier.fillMaxSize(),
@@ -55,21 +64,23 @@ fun ProfileScreen(navController: NavController){
             Column(
                 modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 50.dp)
                     .clip(RoundedCornerShape(15.dp))
-                    .background(color = MaterialTheme.colorScheme.secondary)
+                    .background(color = Color(0xFF19A687))
                     .width(300.dp)
                     .height(350.dp)
             ) {
 
                 RowOfMenu(
                     iconIcon = Icons.Default.Check,
-                    text = "Изучено"
+                    text = "Изучено",
+                    onClick = { navController.navigate("learnedScreen") }
                 )
 
                 Divider()
 
                 RowOfMenu(
                     painterIcon = painterResource(id = R.drawable.ic_process),
-                    text = "В процессе"
+                    text = "В процессе",
+                    onClick = {  }
                 )
 
             }
@@ -104,12 +115,14 @@ fun RowOfMenu(
     painterIcon: Painter? = null,
     iconIcon: ImageVector? = null,
     text: String,
-    arrow: ImageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight
+    arrow: ImageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier.height(50.dp).fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.secondary),
-        verticalAlignment = Alignment.CenterVertically
+            .background(color = Color(0xFF19A687))
+            .clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         if (painterIcon != null) {
             Image(
