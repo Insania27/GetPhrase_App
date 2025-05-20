@@ -216,8 +216,12 @@ fun LearnedScreen(navController: NavController) {
     val learned = learnedViewModel.learned
 
     if (learned.isEmpty()) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("У вас ещё нет изученного")
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primary),
+            contentAlignment = Alignment.Center) {
+            Text("У вас ещё нет изученного", color = Color.White)
         }
     } else {
         LazyVerticalGrid(
@@ -225,12 +229,7 @@ fun LearnedScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF1ABC9C),
-                            Color.LightGray,
-                        )
-                    )
+                    MaterialTheme.colorScheme.primary
                 ),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),

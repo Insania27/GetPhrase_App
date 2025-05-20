@@ -70,12 +70,7 @@ fun MenuScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF1ABC9C),
-                        Color.LightGray,
-                    )
-                )
+                MaterialTheme.colorScheme.primary
             )
             .padding(20.dp)
     ) {
@@ -84,7 +79,7 @@ fun MenuScreen(navController: NavController) {
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp),
-            color = Color.White
+            color = MaterialTheme.colorScheme.onSecondary
         )
 
 

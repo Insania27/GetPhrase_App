@@ -34,17 +34,11 @@ fun BottomNavigationBar(navController: NavHostController) {
 
     val auth = FirebaseAuth.getInstance()
 
-    val colors = listOf(Color(0xFF1ABC9C), Color.LightGray)
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(95.dp)
-            .background(Brush.verticalGradient(colors))
-    ) {
+
         NavigationBar(
-            modifier = Modifier,
-            containerColor = Color.Transparent
+            modifier = Modifier.height(90.dp),
+            containerColor = MaterialTheme.colorScheme.secondary
         ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination?.route
@@ -54,10 +48,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                     label = { Text(item.title) },
                     selected = currentDestination == item.route,
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.White,
-                        unselectedIconColor = Color.Gray,
-                        selectedTextColor = Color.White,
-                        unselectedTextColor = Color.Gray,
+                        selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSecondary,
+                        selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSecondary,
                         indicatorColor = Color.Transparent
                     ),
                     onClick = {
@@ -87,4 +81,4 @@ fun BottomNavigationBar(navController: NavHostController) {
             }
         }
     }
-}
+

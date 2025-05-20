@@ -18,11 +18,13 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = Pink80
 )
 
+private val gradient = listOf(Color(0xFF1ABC9C), Color.LightGray)
+
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF19A687),
-    onPrimary = Color(0xFF27344f),
-    secondary = Color(0xFF99c9b8),
-    onSecondary = Color(0xFF27344f),
+    primary = Color(0xFF0e121c),
+    onPrimary = Color(0xFF5478ef),
+    secondary = Color(0xFF191f2d),
+    onSecondary = Color(0xFFe4e5e8),
     tertiary = Pink40
 
     /* Other default colors to override

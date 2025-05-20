@@ -86,15 +86,10 @@ fun TheDepartedScreen() {
     LazyColumn(modifier = Modifier
         .fillMaxSize()
         .background(
-            Brush.verticalGradient(
-                colors = listOf(
-                    Color(0xFF1ABC9C),
-                    Color.LightGray,
-                )
-            )
+            MaterialTheme.colorScheme.primary
         )
         .padding(8.dp)
     ) { items(words) { pair ->
-        Text(pair, color = MaterialTheme.colorScheme.onPrimary)
+        Text(pair, color = MaterialTheme.colorScheme.onSecondary)
     } }
 }

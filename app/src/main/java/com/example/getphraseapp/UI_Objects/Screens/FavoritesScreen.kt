@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -200,22 +201,16 @@ fun FavoritesScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF1ABC9C),
-                            Color.LightGray,
-                        )
-                    )
-                )
+                    MaterialTheme.colorScheme.primary)
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Чтобы увидеть избранное, войдите в аккаунт")
+            Text("Чтобы увидеть избранное, войдите в аккаунт", color = Color.White)
             Spacer(Modifier.height(8.dp))
             Button(onClick = { navController.navigate("loginScreen") },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimary,
+                    containerColor = Color(0xFF3982FF),
                     contentColor = Color.White
                 )) {
                 Text("Войти")
@@ -237,8 +232,12 @@ fun FavoritesScreen(navController: NavController) {
     val favorites = favoritesViewModel.favorites
 
     if (favorites.isEmpty()) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("У вас ещё нет избранного")
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.primary),
+            contentAlignment = Alignment.Center) {
+            Text("У вас ещё нет избранного", color = Color.White)
         }
     } else {
         LazyVerticalGrid(
@@ -246,12 +245,7 @@ fun FavoritesScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF1ABC9C),
-                            Color.LightGray,
-                        )
-                    )
+                    MaterialTheme.colorScheme.primary
                 ),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),

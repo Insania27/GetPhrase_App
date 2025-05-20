@@ -1,8 +1,17 @@
 package com.example.getphraseapp.UI_Objects.Screens
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -36,11 +45,18 @@ import com.google.firebase.auth.FirebaseAuth
 fun MainScreen(){
     val navController = rememberNavController()
     val auth = FirebaseAuth.getInstance()
+    var userChecked by remember { mutableStateOf(false) }
 
-    val startDestination = if (auth.currentUser == null) {
-        "loginScreen"
-    } else {
-        BottomNavItem.Profile.route
+    LaunchedEffect(Unit) {
+        auth.currentUser?.reload()
+        userChecked = true
+    }
+
+    val startDestination = when {
+        !userChecked -> "splash"
+        auth.currentUser?.isEmailVerified == true -> BottomNavItem.Profile.route
+        auth.currentUser != null -> "verify_email"
+        else -> "loginScreen"
     }
 
     Scaffold(
@@ -51,6 +67,26 @@ fun MainScreen(){
             startDestination = startDestination,
             Modifier.padding(innerPadding)
         ){
+
+            composable("verify_email") {
+                if (auth.currentUser?.isEmailVerified == true) {
+                    LaunchedEffect(Unit) {
+                        navController.navigate(BottomNavItem.Profile.route)
+                    }
+                }
+                VerifyEmailScreen(navController)
+            }
+
+            composable("splash") {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+
             composable (BottomNavItem.Menu.route) { MenuScreen(navController) }
             composable (BottomNavItem.Profile.route) { ProfileScreen(navController) }
             composable (BottomNavItem.Favorites.route) { FavoritesScreen(navController) }

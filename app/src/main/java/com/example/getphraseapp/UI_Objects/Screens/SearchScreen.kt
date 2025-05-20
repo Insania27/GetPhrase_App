@@ -50,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -70,52 +71,56 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(
-            Brush.verticalGradient(
-                colors = listOf(
-                    Color(0xFF1ABC9C),
-                    Color.LightGray,
-                )
-            )
+            MaterialTheme.colorScheme.primary
         )
     ) {
-        TextField(
-            value = searchQuery.value,
-            onValueChange = {
-                searchQuery.value = it
-                viewModel.updateSearchQuery(it)
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color(0xFF1ABC9C))
-                .padding(8.dp)
-                .clip(RoundedCornerShape(30.dp)),
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = Color(0xFF19A687),
-                focusedContainerColor = Color(0xFF19A687),
-                cursorColor = MaterialTheme.colorScheme.onSecondary
-            ),
 
-            placeholder = {
-                Text(
-                    text = "Поиск",
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-        )
+
+
+            TextField(
+                value = searchQuery.value,
+                onValueChange = {
+                    searchQuery.value = it
+                    viewModel.updateSearchQuery(it)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(30.dp)),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    cursorColor = MaterialTheme.colorScheme.onSecondary
+                ),
+
+                placeholder = {
+
+                    Row {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSecondary
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        Text(
+                            text = "Поиск",
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
+                }
+            )
+
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF1ABC9C),
-                            Color.LightGray,
-                        )
-                    )
+                    MaterialTheme.colorScheme.primary
                 ),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -124,12 +129,12 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
                     modifier = Modifier
                         .padding(6.dp)
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp)).background(Brush.verticalGradient(colors))
+                        .clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.secondary)
                         .height(100.dp)
                         .clickable { navController.navigate(app.route) },
                     colors = CardDefaults.cardColors(
                         containerColor = Color.Transparent,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
+                        contentColor = MaterialTheme.colorScheme.onSecondary
                     )
                 ) {
                     Row(

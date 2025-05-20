@@ -54,6 +54,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.5.0")
 
 
+
     // Room dependencies
     implementation("androidx.room:room-runtime:2.7.1")
     implementation("androidx.room:room-ktx:2.7.1")

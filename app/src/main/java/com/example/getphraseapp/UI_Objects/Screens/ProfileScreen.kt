@@ -49,12 +49,7 @@ fun ProfileScreen(navController: NavController){
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF1ABC9C),
-                        Color.LightGray,
-                    )
-                )
+                MaterialTheme.colorScheme.primary
             )
     ) {
         Column (
@@ -64,7 +59,7 @@ fun ProfileScreen(navController: NavController){
             Column(
                 modifier = Modifier.padding(50.dp, 100.dp, 50.dp, 50.dp)
                     .clip(RoundedCornerShape(15.dp))
-                    .background(color = Color(0xFF19A687))
+                    .background(MaterialTheme.colorScheme.secondary)
                     .width(300.dp)
                     .height(350.dp)
             ) {
@@ -120,7 +115,7 @@ fun RowOfMenu(
 ) {
     Row(
         modifier = Modifier.height(50.dp).fillMaxWidth()
-            .background(color = Color(0xFF19A687))
+            .background(MaterialTheme.colorScheme.secondary)
             .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -130,7 +125,7 @@ fun RowOfMenu(
                 contentDescription = null,
                 modifier = Modifier.height(50.dp).width(50.dp).padding(10.dp).size(30.dp),
                 colorFilter = ColorFilter.tint(
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             )
         } else if (iconIcon != null) {
@@ -138,7 +133,7 @@ fun RowOfMenu(
                 imageVector = iconIcon,
                 contentDescription = null,
                 modifier = Modifier.padding(10.dp).size(30.dp),
-                tint = MaterialTheme.colorScheme.onSecondary
+                tint = MaterialTheme.colorScheme.onPrimary
             )
         }
 

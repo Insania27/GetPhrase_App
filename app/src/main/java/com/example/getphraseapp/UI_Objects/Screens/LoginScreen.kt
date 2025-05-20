@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.getphraseapp.Navigation.BottomNavItem
 import com.google.firebase.Firebase
@@ -21,138 +22,67 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 
-//@Composable
-//fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
-//    var email by remember { mutableStateOf("") }
-//    var password by remember { mutableStateOf("") }
-//    var error by remember { mutableStateOf<String?>(null) }
-//
-//    Column(
-//        modifier = Modifier.fillMaxSize().padding(16.dp),
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        TextField(
-//            value = email,
-//            onValueChange = { email = it },
-//            label = { Text("Email") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        TextField(
-//            value = password,
-//            onValueChange = { password = it },
-//            label = { Text("Пароль") },
-//            visualTransformation = PasswordVisualTransformation(),
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//        Spacer(modifier = Modifier.height(8.dp))
-//        error?.let {
-//            Text(text = it, color = MaterialTheme.colorScheme.error)
-//        }
-//        Button(
-//            onClick = {
-//                auth.signInWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener { task ->
-//                        if (task.isSuccessful) {
-//                            navController.navigate("mainScreen") {
-//                                popUpTo(0)
-//                            }
-//                        } else {
-//                            error = when {
-//                                task.exception?.message?.contains("The email address is badly formatted") == true -> "Неверный формат email."
-//                                task.exception?.message?.contains("There is no user record corresponding to this identifier") == true -> "Пользователь с таким email не найден."
-//                                task.exception?.message?.contains("The password is invalid") == true -> "Неверный пароль."
-//                                else -> "Не удалось войти. Попробуйте снова."
-//                            }
-//                        }
-//                    }
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Войти")
-//        }
-//        Spacer(modifier = Modifier.height(8.dp))
-//        TextButton(
-//            onClick = { navController.navigate("registerScreen") }
-//        ) {
-//            Text("Нет аккаунта? Зарегистрируйтесь")
-//        }
-//    }
-//}
 
 
 @Composable
-fun LoginScreen(navController: NavController){
-    val email = remember {
-        mutableStateOf("")
-    }
-    val password = remember {
-        mutableStateOf("")
-    }
-
-    val auth = Firebase.auth
-
-    val errorMessage = remember { mutableStateOf<String?>(null) }
+fun LoginScreen(navController: NavController) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF1ABC9C),
-                        Color.LightGray,
-                    )
-                )
-            ),
+            .background(MaterialTheme.colorScheme.primary),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
 
+        Text(
+            modifier = Modifier.padding(bottom = 16.dp),
+            text = "Вход",
+            fontSize = 36.sp,
+            color = Color.White
+        )
+
         TextField(
-            modifier = Modifier.clip(RoundedCornerShape(30.dp)),
-            value = email.value,
-            onValueChange = {
-                email.value = it
-            },
+            value = email,
+            onValueChange = { email = it },
             label = { Text("Логин", color = MaterialTheme.colorScheme.onSecondary) },
+            modifier = Modifier.clip(RoundedCornerShape(30.dp)),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = Color(0xFF19A687),
-                focusedContainerColor = Color(0xFF19A687),
-                cursorColor = MaterialTheme.colorScheme.onSecondary
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                cursorColor = MaterialTheme.colorScheme.onSecondary,
+                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                disabledTextColor = MaterialTheme.colorScheme.onSecondary
             ),
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
         TextField(
-            modifier = Modifier.clip(RoundedCornerShape(30.dp)),
-            value = password.value,
-            onValueChange = {
-                password.value = it
-            },
+            value = password,
+            onValueChange = { password = it },
             label = { Text("Пароль", color = MaterialTheme.colorScheme.onSecondary) },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.clip(RoundedCornerShape(30.dp)),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                unfocusedContainerColor = Color(0xFF19A687),
-                focusedContainerColor = Color(0xFF19A687),
-                cursorColor = MaterialTheme.colorScheme.onSecondary
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                cursorColor = MaterialTheme.colorScheme.onSecondary,
+                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                disabledTextColor = MaterialTheme.colorScheme.onSecondary
             ),
         )
-
-        errorMessage.value?.let { message ->
-            Text(
-                text = message,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .padding(top = 4.dp)
-            )
-        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -160,50 +90,50 @@ fun LoginScreen(navController: NavController){
             text = "Нет аккаунта? Зарегистрируйтесь",
             Modifier.clickable {
                 navController.navigate("registerScreen")
-        },
-            color = Color(0xFF3982FF)
+            },
+            color = MaterialTheme.colorScheme.onPrimary
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(onClick = {
-            signIn(auth, email.value, password.value, errorMessage, navController)
-        },
+        Button(
+            onClick = {
+                if (email.isValidEmail() && password.isNotEmpty()) {
+                    Firebase.auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+
+                                task.result.user?.let { user ->
+                                    if (user.isEmailVerified) {
+                                        navController.navigate(BottomNavItem.Profile.route) {
+                                            popUpTo(0)
+                                        }
+                                    } else {
+                                        navController.navigate("verify_email") {
+                                            popUpTo(0)
+                                        }
+                                        Firebase.auth.signOut()
+                                    }
+                                }
+                            } else {
+                                errorMessage = task.exception?.message ?: "Ошибка входа"
+                            }
+                        }
+                } else {
+                    errorMessage = "Некорректные данные"
+                }
+            },
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.onPrimary ,
                 contentColor = Color.White
             )
-        ){
-            Text(text = "Войти", fontWeight = FontWeight.Bold)
+        ) {
+            Text("Войти")
+        }
+
+        if (errorMessage.isNotEmpty()) {
+            Text(text = errorMessage, color = Color.Red)
         }
     }
 }
 
-fun signIn(
-    auth: FirebaseAuth,
-    email: String,
-    password: String,
-    errorMessage: MutableState<String?>,
-    navController: NavController
-){
-    if (email.isBlank() || password.isBlank()) {
-        errorMessage.value = "Заполните все поля"
-        return
-    }
-
-    auth.signInWithEmailAndPassword(email, password)
-        .addOnCompleteListener{
-            if (it.isSuccessful){
-                navController.navigate(BottomNavItem.Profile.route) {
-                    popUpTo(0)
-                }
-            } else {
-                errorMessage.value = when {
-                    it.exception?.message?.contains("The email address is badly formatted") == true ||
-                    it.exception?.message?.contains("The supplied auth credential is incorrect, malformed or has expired") == true ->
-                        "Неверные логин или пароль"
-                    else -> "Ошибка входа. Попробуйте снова"
-                }
-            }
-        }
-}

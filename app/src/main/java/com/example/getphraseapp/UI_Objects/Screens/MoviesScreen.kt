@@ -75,12 +75,7 @@ fun MoviesScreen(navController: NavController) {
 
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier
         .fillMaxSize().background(
-            Brush.verticalGradient(
-                colors = listOf(
-                    Color(0xFF1ABC9C),
-                    Color.LightGray,
-                )
-            )
+            MaterialTheme.colorScheme.primary
         )
     ) {
         items(mySelectedMovies) { movie ->
