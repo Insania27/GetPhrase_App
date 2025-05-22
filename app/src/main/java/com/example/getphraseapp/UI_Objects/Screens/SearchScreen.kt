@@ -76,44 +76,58 @@ fun SearchScreen(navController: NavController, viewModel: AppsViewModel) {
     ) {
 
 
+            Row(
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth().height(60.dp)
+                    .clip(RoundedCornerShape(30.dp))
+                    .background(MaterialTheme.colorScheme.secondary),
+                verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    modifier = Modifier.padding(start = 16.dp),
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSecondary,
+                )
+                TextField(
+                    value = searchQuery.value,
+                    onValueChange = {
+                        searchQuery.value = it
+                        viewModel.updateSearchQuery(it)
+                    },
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        cursorColor = MaterialTheme.colorScheme.onSecondary,
+                        focusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
+                        disabledTextColor = MaterialTheme.colorScheme.onSecondary
+                    ),
 
-            TextField(
-                value = searchQuery.value,
-                onValueChange = {
-                    searchQuery.value = it
-                    viewModel.updateSearchQuery(it)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary)
-                    .padding(8.dp)
-                    .clip(RoundedCornerShape(30.dp)),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                    cursorColor = MaterialTheme.colorScheme.onSecondary
-                ),
+                    placeholder = {
 
-                placeholder = {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(TextFieldDefaults.MinHeight),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text(
+                                text = "Поиск",
+                                color = MaterialTheme.colorScheme.onSecondary,
+                                modifier = Modifier.align(Alignment.CenterStart)
+                            )
+                        }
 
-                    Row {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSecondary
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-
-                        Text(
-                            text = "Поиск",
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
                     }
-                }
-            )
+                )
+            }
+
 
 
         LazyColumn(

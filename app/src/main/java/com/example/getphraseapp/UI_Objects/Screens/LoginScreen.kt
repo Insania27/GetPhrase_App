@@ -42,7 +42,7 @@ fun LoginScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 16.dp),
             text = "Вход",
             fontSize = 36.sp,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onPrimary
         )
 
         TextField(

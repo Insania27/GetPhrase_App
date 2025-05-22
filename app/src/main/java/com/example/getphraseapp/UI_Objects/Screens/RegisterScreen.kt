@@ -164,7 +164,7 @@ fun RegisterScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 16.dp),
             text = "Регситрация",
             fontSize = 36.sp,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onPrimary
         )
 
         TextField(
@@ -221,6 +221,7 @@ fun RegisterScreen(navController: NavController) {
         Button(
             onClick = {
                 if (email.isValidEmail() && password.length >= 6) {
+                    println("DEBUG: Trying to login with $email")
                     signUp(email, password, onSuccess = {
                         navController.navigate("verify_email")
                     }, onError = { error ->

@@ -190,7 +190,7 @@ fun MovieCard(
                     color = Color.White,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(16.dp)
+                        .padding(10.dp)
                 )
 
                 IconButton(

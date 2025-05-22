@@ -290,7 +290,10 @@ fun LearnedScreen(navController: NavController) {
                                     text = lear.title,
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp
+                                    fontSize = 20.sp,
+                                    modifier = Modifier
+                                        .align(Alignment.BottomStart)
+                                        .padding(10.dp)
                                 )
                             }
 

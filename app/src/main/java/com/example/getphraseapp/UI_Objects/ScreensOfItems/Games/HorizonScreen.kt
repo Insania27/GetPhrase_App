@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 @Preview(showBackground = true)
 @Composable
-fun HorzionScreen(){
+fun HorizonScreen(){
     val words = listOf(
         "Tallneck - Высокошея",
         "Focus Lens - Линза фокуса",

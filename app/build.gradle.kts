@@ -65,6 +65,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
 
 
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.0-alpha")
+
+
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

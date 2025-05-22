@@ -79,7 +79,7 @@ fun MenuScreen(navController: NavController) {
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 24.dp),
-            color = MaterialTheme.colorScheme.onSecondary
+            color = MaterialTheme.colorScheme.onPrimary
         )
 
 
