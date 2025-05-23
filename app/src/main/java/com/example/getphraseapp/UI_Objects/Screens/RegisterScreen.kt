@@ -32,114 +32,6 @@ import com.google.firebase.auth.auth
 import kotlinx.coroutines.delay
 
 
-//@Composable
-//fun RegisterScreen(navController: NavController){
-//    val email = remember {
-//        mutableStateOf("")
-//    }
-//    val password = remember {
-//        mutableStateOf("")
-//    }
-//
-//    val auth = Firebase.auth
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(
-//                MaterialTheme.colorScheme.primary
-//            ),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//
-//        Text(
-//            modifier = Modifier.padding(bottom = 16.dp),
-//            text = "Регистрация",
-//            fontSize = 36.sp,
-//            color = Color.White
-//        )
-//
-//        TextField(
-//            modifier = Modifier.clip(RoundedCornerShape(30.dp)),
-//            value = email.value,
-//            onValueChange = {
-//                email.value = it
-//            },
-//            label = { Text("Логин", color = MaterialTheme.colorScheme.onSecondary) },
-//            colors = TextFieldDefaults.colors(
-//                focusedIndicatorColor = Color.Transparent,
-//                unfocusedIndicatorColor = Color.Transparent,
-//                disabledIndicatorColor = Color.Transparent,
-//                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-//                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-//                cursorColor = MaterialTheme.colorScheme.onSecondary,
-//                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
-//                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
-//                disabledTextColor = MaterialTheme.colorScheme.onSecondary
-//            ),
-//        )
-//
-//        Spacer(modifier = Modifier.height(10.dp))
-//
-//        TextField(
-//            modifier = Modifier.clip(RoundedCornerShape(30.dp)),
-//            value = password.value,
-//            onValueChange = {
-//                password.value = it
-//            },
-//            label = { Text("Пароль", color = MaterialTheme.colorScheme.onSecondary) },
-//            colors = TextFieldDefaults.colors(
-//                focusedIndicatorColor = Color.Transparent,
-//                unfocusedIndicatorColor = Color.Transparent,
-//                disabledIndicatorColor = Color.Transparent,
-//                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-//                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-//                cursorColor = MaterialTheme.colorScheme.onSecondary,
-//                focusedTextColor = MaterialTheme.colorScheme.onSecondary,
-//                unfocusedTextColor = MaterialTheme.colorScheme.onSecondary,
-//                disabledTextColor = MaterialTheme.colorScheme.onSecondary
-//            ),
-//        )
-//
-//        Spacer(modifier = Modifier.height(10.dp))
-//
-//        Text(
-//            text = "Есть аккаунт? Войдите",
-//            Modifier.clickable {
-//                navController.navigate("loginScreen")
-//            },
-//            color = MaterialTheme.colorScheme.onPrimary
-//        )
-//
-//        Spacer(modifier = Modifier.height(10.dp))
-//
-//        Button(onClick = {
-//            signUp(auth, email.value, password.value, navController)
-//        },
-//            colors = ButtonDefaults.buttonColors(
-//                containerColor = MaterialTheme.colorScheme.onPrimary ,
-//                contentColor = Color.White
-//            )
-//        ){
-//            Text(text = "Зарегистрироваться", fontWeight = FontWeight.Bold)
-//        }
-//    }
-//}
-
-//fun signUp(auth: FirebaseAuth, email: String, password: String, navController: NavController){
-//    auth.createUserWithEmailAndPassword(email, password)
-//        .addOnCompleteListener{
-//            if (it.isSuccessful){
-//                navController.navigate("loginScreen") {
-//                    popUpTo(0)
-//                }
-//            } else {
-//
-//            }
-//        }
-//}
-
 fun String.isValidEmail(): Boolean {
     return this.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
@@ -162,7 +54,7 @@ fun RegisterScreen(navController: NavController) {
 
         Text(
             modifier = Modifier.padding(bottom = 16.dp),
-            text = "Регситрация",
+            text = "Регистрация",
             fontSize = 36.sp,
             color = MaterialTheme.colorScheme.onPrimary
         )

@@ -44,27 +44,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.getphraseapp.Data.Network.App
-import com.example.getphraseapp.Data.Network.RetrofitClient
-import com.example.getphraseapp.Navigation.Screen
-import com.example.getphraseapp.ViewModel.GameViewModel
-import com.example.getphraseapp.ViewModel.GameViewModelFactory
-import okhttp3.internal.wait
 
 @Composable
 fun MenuScreen(navController: NavController) {
-    val factory = remember { GameViewModelFactory(RetrofitClient.apiService) }
-    val viewModel: GameViewModel = viewModel(factory = factory)
-    val gamesState = viewModel.games.observeAsState()
-    val games = gamesState.value ?: emptyList()
 
-    LaunchedEffect(Unit) {
-        viewModel.fetchAssassinGame()
-    }
 
     Column(
         modifier = Modifier
