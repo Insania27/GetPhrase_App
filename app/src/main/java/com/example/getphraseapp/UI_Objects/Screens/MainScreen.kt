@@ -56,6 +56,8 @@ import com.example.getphraseapp.ViewModel.AppsViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.FirebaseAuth
 
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(){
